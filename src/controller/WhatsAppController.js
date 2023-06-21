@@ -135,20 +135,63 @@ class WhatsAppController {
         });
 
         this.el.btnAttachPhoto.on('click', (event) => {
-            console.log('Photo');
+            this.el.inputPhoto.click();
         });
 
+        this.el.inputPhoto.on('change', (event) => {
+            console.log(this.el.inputPhoto.files);
+            [...this.el.inputPhoto.files].forEach((file) => {
+                console.log(file);
+            });
+        })
+
         this.el.btnAttachCamera.on('click', (event) => {
-            console.log('Camera');
+            this.closeAllMainPanel();
+            this.el.panelCamera.addClass('open');
+            this.el.panelCamera.css({
+                'height': 'calc(100% - 120px)'
+            })
+        });
+
+        this.el.btnClosePanelCamera.on('click', (event) => {
+            this.closeAllMainPanel();
+            this.el.panelMessagesContainer.show();
+        });
+
+        this.el.btnTakePicture.on('click', (event) => {
+            console.log('TakePicture');
         });
 
         this.el.btnAttachDocument.on('click', (event) => {
-            console.log('Document');
+            this.closeAllMainPanel();
+            this.el.panelDocumentPreview.addClass('open');
+            this.el.panelDocumentPreview.css({
+                'height': 'calc(100% - 120px)'
+            })
+        });
+
+        this.el.btnClosePanelDocumentPreview.on('click', (event) => {
+            this.closeAllMainPanel();
+            this.el.panelMessagesContainer.show();
+        });
+
+        this.el.btnSendDocument.on('click', (event) => {
+            console.log('send document');
         });
 
         this.el.btnAttachContact.on('click', (event) => {
-            console.log('Contact');
+            this.el.modalContacts.show();
         });
+
+        this.el.btnCloseModalContacts.on('click', (event) => {
+            this.el.modalContacts.hide();
+        })
+    }
+
+    closeAllMainPanel() {
+        this.el.panelMessagesContainer.hide();
+        this.el.panelDocumentPreview.removeClass('open');
+        this.el.panelCamera.removeClass('open');
     }
 
     closeMenuAttach() {
