@@ -48,6 +48,11 @@ class WhatsAppController {
            return this;
         }
         
+        Element.prototype.toggleClass = function(name) {
+           this.hasClass(name) ? this.removeClass(name) : this.addClass(name);
+           return this;
+        }
+        
         Element.prototype.removeClass = function(name) {
             this.classList.remove(name);
             return this;
@@ -199,6 +204,39 @@ class WhatsAppController {
 
         this.el.btnFinishMicrophone.on('click', (event) => {
             this.closeRecordMicrophone();
+        });
+
+        this.el.inputText.on('keypress', (event) => {
+            if (event.key === 'Enter' && !event.ctrlKey) {
+                event.preventDefault();
+                this.el.btnSend.click();
+            }
+        });
+
+        this.el.inputText.on('keyup', (event) => {
+            if (this.el.inputText.innerHTML.length) {
+                this.el.inputPlaceholder.hide();
+                this.el.btnSendMicrophone.hide();
+                this.el.btnSend.show();
+            } else {
+                this.el.inputPlaceholder.show();
+                this.el.btnSendMicrophone.show();
+                this.el.btnSend.hide();
+            }
+        });
+
+        this.el.btnSend.on('click', (event) => {
+            console.log(this.el.inputText.innerHTML);
+        });
+
+        this.el.btnEmojis.on('click', (event) => {
+            this.el.panelEmojis.toggleClass('open');
+        });
+
+        this.el.panelEmojis.querySelectorAll('.emojik').forEach((emoji) => {
+            emoji.on('click', (event) => {
+                console.log(emoji.dataset.unicode);
+            });
         });
     }
 
